@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use App\Models\Server;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -15,10 +16,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        User::factory(12)->create();
 
         Server::create([
-            'hostname' => 'Enes Yerli Tepehan',
+            // 'hostname' => 'Suphi Erkin Karaçay',
             'ip' => '172.28.226.106',
             'name' => 'ott-nds-php-portal-aarslan-1',
             'availability' => 'unavailable',
@@ -26,7 +27,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Server::create([
-            'hostname' => 'Ahmet Oğuz Koruyucu',
+            // 'hostname' => 'Ahmet Oğuz Koruyucu',
             'ip' => '172.28.226.108',
             'name' => 'ott-nds-php-portal-soduncu-1',
             'availability' => 'unavailable',
@@ -34,7 +35,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Server::create([
-            'hostname' => 'Ahmet Kutay Karacair',
+            // 'hostname' => 'Ahmet Kutay Karacair',
             'ip' => '172.28.226.109',
             'name' => 'ott-nds-ucaas-portal-msahin-1',
             'availability' => 'unavailable',
@@ -42,7 +43,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Server::create([
-            'hostname' => 'Oğuzhan SARI',
+            // 'hostname' => 'Oğuzhan SARI',
             'ip' => '172.28.226.110',
             'name' => 'ott-nds-ucaas-portal-myondem-1',
             'availability' => 'available',
@@ -50,7 +51,7 @@ class DatabaseSeeder extends Seeder
         ]);
         
         Server::create([
-            'hostname' => 'Selçuk BERBER',
+            // 'hostname' => 'Selçuk BERBER',
             'ip' => '172.28.226.111',
             'name' => 'ott-nds-ucaas-portal-sberber-1',
             'availability' => 'unavailable',
@@ -58,7 +59,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Server::create([
-            'hostname' => 'Sevki Oruç/Doğancan Çelik',
+            // 'hostname' => 'Sevki Oruç/Doğancan Çelik',
             'ip' => '172.28.226.113',
             'name' => 'ott-nds-ucaas-portal-mgulzelsever-1',
             'availability' => 'available',
@@ -66,7 +67,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Server::create([
-            'hostname' => 'Özgür Pir',
+            // 'hostname' => 'Özgür Pir',
             'ip' => '172.28.226.114',
             'name' => 'ott-nds-ucaas-portal-odemir-1',
             'availability' => 'unavailable',
@@ -74,7 +75,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Server::create([
-            'hostname' => 'Oğuzhan Osma',
+            // 'hostname' => 'Oğuzhan Osma',
             'ip' => '172.28.226.115',
             'name' => 'ott-nds-php-portal-hkiran-1',
             'availability' => 'unavailable',
@@ -82,7 +83,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Server::create([
-            'hostname' => 'Ataman TELCİ',
+            // 'hostname' => 'Ataman TELCİ',
             'ip' => '172.28.226.116',
             'name' => 'ott-nds-php-portal-atelci-1',
             'availability' => 'available',
@@ -90,7 +91,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Server::create([
-            'hostname' => 'Yunus Emre Ozan',
+            // 'hostname' => 'Yunus Emre Ozan',
             'ip' => '172.28.226.117',
             'name' => 'ott-nds-ucaas-portal-yozan-1',
             'availability' => 'unavailable',
@@ -98,7 +99,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Server::create([
-            'hostname' => 'Erdem Salihoğlu',
+            // 'hostname' => 'Erdem Salihoğlu',
             'ip' => '172.28.226.118',
             'name' => 'ott-nds-php-portal-esalih-1',
             'availability' => 'unavailable',
@@ -106,7 +107,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Server::create([
-            'hostname' => 'Aykut Hakki YURTMEN',
+            // 'hostname' => 'Aykut Hakki YURTMEN',
             'ip' => '172.28.226.120',
             'name' => 'ott-nds-ucaas-portal-ayurtmen-1',
             'availability' => 'unavailable',
@@ -114,7 +115,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Server::create([
-            'hostname' => 'Ubeydullah COBAN',
+            // 'hostname' => 'Ubeydullah COBAN',
             'ip' => '172.28.226.121',
             'name' => 'ott-nds-ucaas-portal-ucoban-1',
             'availability' => 'available',
@@ -122,7 +123,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Server::create([
-            'hostname' => 'Muhammed Taha Surmeli',
+            // 'hostname' => 'Muhammed Taha Surmeli',
             'ip' => '172.28.226.124',
             'name' => 'ott-nds-php-portal-msurmeli-1',
             'availability' => 'unavailable',
@@ -130,7 +131,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Server::create([
-            'hostname' => 'Umit Demirci',
+            // 'hostname' => 'Umit Demirci',
             'ip' => '172.28.226.125',
             'name' => 'ott-nds-php-portal-akan-1',
             'availability' => 'unavailable',
@@ -138,7 +139,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Server::create([
-            'hostname' => 'Faruk KALEDIBI',
+            // 'hostname' => 'Faruk KALEDIBI',
             'ip' => '172.28.226.126',
             'name' => 'ott-nds-php-portal-kaledibi-1',
             'availability' => 'unavailable',
@@ -146,7 +147,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Server::create([
-            'hostname' => 'Adem Ali Durmuş',
+            // 'hostname' => 'Adem Ali Durmuş',
             'ip' => '172.28.226.77',
             'name' => 'ott-nds-ucaas-portal-adurmus-1',
             'availability' => 'unavailable',
@@ -154,7 +155,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Server::create([
-            'hostname' => 'Enes Yerli TEPEHAN',
+            // 'hostname' => 'Enes Yerli TEPEHAN',
             'ip' => '172.28.226.82',
             'name' => 'ott-nds-php-portal-etepehan-1',
             'availability' => 'available',
@@ -162,7 +163,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Server::create([
-            'hostname' => 'Akın Gündüz',
+            // 'hostname' => 'Akın Gündüz',
             'ip' => '172.28.226.89',
             'name' => 'ott-nds-php-portal-agunduz-1',
             'availability' => 'available',
@@ -170,7 +171,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Server::create([
-            'hostname' => 'Serhat Can',
+            // 'hostname' => 'Serhat Can',
             'ip' => '172.28.226.98',
             'name' => 'ott-nds-ucaas-portal-otasci-1',
             'availability' => 'available',
@@ -178,7 +179,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Server::create([
-            'hostname' => 'Sinan GUL',
+            // 'hostname' => 'Sinan GUL',
             'ip' => '172.28.226.119',
             'name' => 'ott-nds-php-portal-sinang-1',
             'availability' => 'unavailable',
@@ -186,7 +187,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Server::create([
-            'hostname' => 'Berna İkiz',
+            // 'hostname' => 'Berna İkiz',
             'ip' => '172.28.226.112',
             'name' => 'ott-nds-ucaas-portal-ogormel-1',
             'availability' => 'available',
@@ -194,7 +195,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Server::create([
-            'hostname' => 'Şeyma Bulut',
+            // 'hostname' => 'Şeyma Bulut',
             'ip' => '172.28.226.85',
             'name' => 'ott-nds-php-portal-alcelik',
             'availability' => 'unavailable',
@@ -202,7 +203,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Server::create([
-            'hostname' => 'Mert Dündar',
+            // 'hostname' => 'Mert Dündar',
             'ip' => '172.28.226.107',
             'name' => 'ott-nds-php-portal-mdundar-1',
             'availability' => 'unavailable',

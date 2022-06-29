@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ServerController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,3 +31,18 @@ Route::get('/edit', [ServerController::class, 'edit']);
 
 // Changing Server Availability
 Route::get('/update/{id}', [ServerController::class, 'update']);
+
+// Show Register/Create Form
+Route::get('/register', [UserController::class, 'create'])->middleware('guest');
+
+// Show Login Form
+Route::get('/login', [UserController::class, 'login'])->middleware('guest');
+
+//Create New User
+Route::post('/users', [UserController::class, 'store']);
+
+// Authenticate User
+Route::post('/users/authenticate', [UserController::class, 'authenticate']);
+
+// Log User Out
+Route::post('/logout', [UserController::class, 'logout'])->middleware('auth');

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Server;
 use Faker\Core\Number;
 use Illuminate\Http\Request;
@@ -10,8 +11,9 @@ class ServerController extends Controller
 {
     public function index() {
         // dd(request('tag'));
-        return view('index', [
-            'servers' => Server::all()
+        return view('servers.servers', [
+            'servers' => Server::all(),
+            'users' => User::all()
         ]);
     }
 

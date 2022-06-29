@@ -15,13 +15,14 @@ return new class extends Migration
     {
         Schema::create('servers', function (Blueprint $table) {
             $table->id();
-            $table->string('hostname');
+            $table->foreignId('user_id')->nullable()->constrained();
             $table->string('ip');
             $table->string('name');
             $table->string('availability');
             $table->date('available_on');
             $table->timestamps();
         });
+
     }
 
     /**
