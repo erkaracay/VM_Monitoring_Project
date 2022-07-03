@@ -15,11 +15,12 @@ return new class extends Migration
     {
         Schema::create('servers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->nullable()->constrained();
+            $table->foreignId('user_id')->nullable();
             $table->string('ip');
             $table->string('name');
+            $table->boolean('running')->default(true);
             $table->string('availability');
-            $table->date('available_on');
+            $table->date('available_on')->nullable();
             $table->timestamps();
         });
 

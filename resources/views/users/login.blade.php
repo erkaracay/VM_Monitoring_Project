@@ -42,7 +42,7 @@
             <div class="mt-8">
                 <p>
                     Don't have an account?
-                    <a href="/register" class="text-gray-900 hover:border-b hover:border-gray-900">
+                    <a href="/users/register" class="text-gray-900 hover:border-b hover:border-gray-900">
                         Register
                     </a>
                 </p>

@@ -24,25 +24,49 @@ use App\Http\Controllers\UserController;
 // update -> Update listing
 // destroy -> Delete listing
 
+// Show all servers
 Route::get('/', [ServerController::class, 'index']);
 
-// Changing Owner Name
-Route::get('/edit', [ServerController::class, 'edit']);
+// Show Form To Claim Server
+Route::get('/servers/{id}/claim', [ServerController::class, 'claim'])->middleware('auth');
 
-// Changing Server Availability
-Route::get('/update/{id}', [ServerController::class, 'update']);
+// Unclaim a Server
+Route::get('/servers/{id}/unclaim', [ServerController::class, 'unclaim'])->middleware('auth');
+
+// Confirm Claim Of a Server
+Route::post('/servers/confirmClaim', [ServerController::class, 'confirmClaim'])->middleware('auth');
+
+// List Servers To Manage
+Route::get('/servers/manage', [ServerController::class, 'manage'])->middleware('auth');
+
+// Delete Server
+Route::delete('/servers/{id}', [ServerController::class, 'destroy'])->middleware('auth');
+
+// Show Server Create Form
+Route::get('/servers/create', [ServerController::class, 'create'])->middleware('auth');
+
+// Create Server
+Route::post('/servers', [ServerController::class, 'store'])->middleware('auth');
+
+// Show Server Edit Form
+Route::get('/servers/{id}/edit', [ServerController::class, 'edit'])->middleware('auth');
+
+// Update Server
+Route::put('/servers/{id}', [ServerController::class, 'update'])->middleware('auth');
+
+#########################################################################################################
 
 // Show Register/Create Form
-Route::get('/register', [UserController::class, 'create'])->middleware('guest');
+Route::get('/users/register', [UserController::class, 'create'])->middleware('guest');
 
 // Show Login Form
-Route::get('/login', [UserController::class, 'login'])->middleware('guest');
+Route::get('/users/login', [UserController::class, 'login'])->middleware('guest');
 
 //Create New User
-Route::post('/users', [UserController::class, 'store']);
+Route::post('/users/store', [UserController::class, 'store']);
 
 // Authenticate User
 Route::post('/users/authenticate', [UserController::class, 'authenticate']);
 
 // Log User Out
-Route::post('/logout', [UserController::class, 'logout'])->middleware('auth');
+Route::post('/users/logout', [UserController::class, 'logout'])->middleware('auth');

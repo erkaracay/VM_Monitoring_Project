@@ -7,7 +7,7 @@
             <p class="mb-4">Create an account to manage servers</p>
         </header>
 
-        <form action="/users" method="POST">
+        <form action="/users/store" method="POST">
             @csrf
             <div class="mb-6">
                 <label for="name" class="inline-block text-lg mb-2">
@@ -65,7 +65,7 @@
             <div class="mt-8">
                 <p>
                     Already have an account?
-                    <a href="/login" class="text-gray-900 hover:border-b hover:border-gray-900">
+                    <a href="/users/login" class="text-gray-900 hover:border-b hover:border-gray-900">
                         Login
                     </a>
                 </p>

@@ -6,5 +6,8 @@
         <th class="px-4 py-3 border-t border-b border-gray-300 text-md">Server Name</th>
         <th class="px-4 py-3 border-t border-b border-gray-300 text-md">Availability</th>
         <th class="px-4 py-3 border-t border-b border-gray-300 text-md">Available On</th>
+        @auth
+        <th class="px-4 py-3 border-t border-b border-gray-300 text-md">Claim</th>
+        @endauth
     </tr>
 </thead>
