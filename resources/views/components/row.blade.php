@@ -2,7 +2,6 @@
 use App\Models\User;
 @endphp
 @props(['server'])
-@props(['users'])
 
 <tr class="border-gray-300 hover:bg-gray-300 border-t border-b border-gray-300 ">
     <td class="px-2 py-2 text-center text-md w-2">{{$server->id}}</td>

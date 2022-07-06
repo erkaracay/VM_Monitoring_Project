@@ -70,7 +70,17 @@
     <footer class="fixed bottom-0 left-0 w-full flex items-center justify-start font-bold bg-gray-50 h-16 opacity-90 md:justify-center">
         <p class="ml-2">Version 0.2</p>
         @auth
-        <a href="/servers/manage" class="absolute top-2/7 right-10 bg-gray-900 hover:bg-black text-white py-2 px-5">Manage Servers</a>
+        <ul class="flex absolute top-2/7 right-10 ">
+            <li class="mx-1">
+                <a href="/users/owned" class="bg-gray-900 hover:bg-black text-white py-2 px-5">Your Servers</a>
+            </li>
+            <li class="mx-1">
+                <a href="/users" class="bg-gray-900 hover:bg-black text-white py-2 px-5">All Users</a>
+            </li>
+            <li class="mx-1">
+                <a href="/servers/manage" class="bg-gray-900 hover:bg-black text-white py-2 px-5">Manage Servers</a>
+            </li>
+        </ul>
         @else
         <a href="/users/login" class="absolute top-2/7 right-10 bg-gray-900 hover:bg-black text-white py-2 px-5">Log In</a>
         @endauth

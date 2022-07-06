@@ -8,6 +8,14 @@ use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
+    // List All Users
+    public function index() {
+        // dd(request('tag'));
+        return view('users.index', [
+            'users' => User::paginate(10)
+        ]);
+    }
+
       // Show Register/Create Form
       public function create() {
         return view('users.register');
@@ -64,5 +72,19 @@ class UserController extends Controller
         }
 
         return back()->withErrors(['email' => 'Invalid Credentials'])->onlyInput('email');
+    }
+
+    // List User's Claimed Servers
+    public function manage($id) {
+        return view('users.manage', [
+            'servers' => User::find($id)->servers()->get()
+        ]);
+    }
+
+    // List Logged In User's Servers
+    public function getServers() {
+        return view('users.manage', [
+            'servers' => auth()->user()->servers()->get()
+        ]);
     }
 }

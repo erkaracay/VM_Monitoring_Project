@@ -12,7 +12,7 @@ class ServerController extends Controller
 {
     public function index() {
         // dd(request('tag'));
-        return view('servers.servers', [
+        return view('servers.index', [
             'servers' => Server::paginate(12),
             'users' => User::all()
         ]);

@@ -70,3 +70,12 @@ Route::post('/users/authenticate', [UserController::class, 'authenticate']);
 
 // Log User Out
 Route::post('/users/logout', [UserController::class, 'logout'])->middleware('auth');
+
+// List All Users
+Route::get('/users', [UserController::class, 'index']);
+
+// List A User's Claimed Servers
+Route::get('/users/{id}/servers', [UserController::class, 'manage'])->middleware('auth');
+
+// List Logged In User's Servers
+Route::get('/users/owned', [UserController::class, 'getServers'])->middleware('auth');
