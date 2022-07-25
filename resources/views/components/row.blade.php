@@ -15,10 +15,10 @@ use App\Models\User;
     <td class="px-2 py-2 text-center text-md">{{$server->ip}}</td>
     <td class="px-2 py-2 text-center text-md">{{$server->name}}</td>
     <td class="px-2 py-2 justify-center text-md flex">
-    @if ($server->availability == "available" && $server->running)
-        <span class="btn bg-teal-500 dark:bg-teal-400 p-1 px-3 rounded w-75">{{$server->availability}}</span>
-    @elseif($server->availability == "claimed")
-        <span class="btn bg-amber-500 dark:bg-amber-500 p-1 px-4 rounded w-75">{{$server->availability}}</span>
+    @if ($server->availability == 1 && $server->running)
+        <span class="btn bg-teal-500 dark:bg-teal-400 p-1 px-3 rounded w-75">available</span>
+    @elseif($server->availability == 0)
+        <span class="btn bg-amber-500 dark:bg-amber-500 p-1 px-4 rounded w-75">claimed</span>
     @else
         <span class="btn bg-red-600 dark:bg-red-600 p-1 rounded w-75">unavailable</span>
     @endif
@@ -34,7 +34,7 @@ use App\Models\User;
     </td>
     <td class="px-2 py-2  text-md">{{$server->available_on}}</td>
     @auth
-        @if ($server->availability == "available" && $server->running)
+        @if ($server->availability == 1 && $server->running)
         <td class="px-2 py-2  text-md">
             <a href="/servers/{{$server->id}}/claim"><button class="btn bg-gray-900 text-white p-2 rounded">Claim</button></a>
         </td>     

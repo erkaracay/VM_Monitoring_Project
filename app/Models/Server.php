@@ -11,8 +11,8 @@ class Server extends Model {
     protected $fillable = [
         'name',
         'ip',
-        'running',
-        'availability',
+        'running', // 0 = not running, 1 = running
+        'availability', // 0 = claimed, 1 = available
         'user_id',
         'available_on'
     ];
@@ -20,5 +20,13 @@ class Server extends Model {
     // Relationship To User
     public function user() {
         return $this->belongsTo(User::class, 'id');
+    }
+
+    public function scopeFilter($query, array $filters) {
+        if($filters['search'] ?? false) {
+            $query->where('id', 'like', '%' . request('search') . '%')
+            ->orWhere('ip', 'like', '%' . request('search') . '%')
+            ->orWhere('name', 'like', '%' . request('search') . '%');
+        }
     }
 }

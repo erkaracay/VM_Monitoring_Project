@@ -12,7 +12,7 @@ class UserController extends Controller
     public function index() {
         // dd(request('tag'));
         return view('users.index', [
-            'users' => User::paginate(10)
+            'users' => User::latest()->filter(request(['search']))->get()->paginate(10)
         ]);
     }
 
@@ -32,7 +32,7 @@ class UserController extends Controller
 
         // Hash Password & ID
         $formFields['password'] = bcrypt($formFields['password']);
-        $formFields['id'] = fake()->unique()->numberBetween(1, 100);
+        $formFields['id'] = fake()->unique()->numerify('######');
         
         // Create User
         $user = User::create($formFields);

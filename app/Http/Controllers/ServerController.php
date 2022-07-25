@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Server;
-use Faker\Core\Number;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -12,17 +11,14 @@ class ServerController extends Controller
 {
     public function index() {
         // dd(request('tag'));
+        // throw new Exception('error');
+
+        // $servers = collect(Server::all())->sortByDesc('running');
         return view('servers.index', [
-            'servers' => Server::paginate(12),
+            'servers' => collect(collect(Server::latest()->filter(request(['search']))->get())->sortBy('availability'))->sortByDesc('running')->paginate(12),
             'users' => User::all()
         ]);
-    }
-
-    function prompt($prompt_msg){
-        echo("<script type='text/javascript'> var answer = prompt('".$prompt_msg."'); </script>");
-
-        $answer = "<script type='text/javascript'> document.write(answer); </script>";
-        return($answer);
+        
     }
 
     // Claim a server
@@ -39,7 +35,7 @@ class ServerController extends Controller
         $server = Server::find($id);
         $server->user_id = null;
         $server->available_on = null;
-        $server->availability = "available";
+        $server->availability = "1";
         $server->save();
 
         return redirect('/');
@@ -50,7 +46,7 @@ class ServerController extends Controller
         // dd($server->id);
         $server = Server::find($request->id);
         $server->user_id = auth()->user()->id;
-        $server->availability = "claimed";
+        $server->availability = "0";
         $server->available_on = $request->date;
         $server->save();
 
@@ -59,8 +55,10 @@ class ServerController extends Controller
 
     // List servers to manage
     public function manage() {
+        $servers = collect(Server::all())->sortByDesc('running');
+
         return view('servers.manage', [
-            'servers' => Server::paginate(8),
+            'servers' => $servers->paginate(8),
             'users' => User::all()
         ]);
     }
@@ -93,7 +91,7 @@ class ServerController extends Controller
 
         $formFields['user_id'] = null; // Set user_id to null initially
         $formFields['available_on'] = null; // Set to null to indicate that the server is available
-        $formFields['availability'] = "available"; // default to available
+        $formFields['availability'] = "1"; // Default to available
         // dd($formFields);
 
         Server::create($formFields);
@@ -125,7 +123,7 @@ class ServerController extends Controller
         }
 
         $formFields['available_on'] = $formFields['user_id'] == null ? null : $request->date;
-        $formFields['availability'] = $formFields['user_id'] == null ? "available" : "claimed";
+        $formFields['availability'] = $formFields['user_id'] == null ? "1" : "0";
         // dd($formFields);
 
         $server = Server::find($id);

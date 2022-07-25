@@ -15,15 +15,6 @@ use App\Http\Controllers\UserController;
 |
 */
 
-// Common Resource Routes:
-// index -> Show all listings
-// show -> Show single Listing
-// create -> Show form to create new listing
-// store -> Store new listing
-// edit -> Show form to edit listing
-// update -> Update listing
-// destroy -> Delete listing
-
 // Show all servers
 Route::get('/', [ServerController::class, 'index']);
 
@@ -37,30 +28,30 @@ Route::get('/servers/{id}/unclaim', [ServerController::class, 'unclaim'])->middl
 Route::post('/servers/confirmClaim', [ServerController::class, 'confirmClaim'])->middleware('auth');
 
 // List Servers To Manage
-Route::get('/servers/manage', [ServerController::class, 'manage'])->middleware('auth');
+Route::get('/servers/manage', [ServerController::class, 'manage'])->middleware('admin');
 
 // Delete Server
-Route::delete('/servers/{id}', [ServerController::class, 'destroy'])->middleware('auth');
+Route::delete('/servers/{id}', [ServerController::class, 'destroy'])->middleware('admin');
 
 // Show Server Create Form
-Route::get('/servers/create', [ServerController::class, 'create'])->middleware('auth');
+Route::get('/servers/create', [ServerController::class, 'create'])->middleware('admin');
 
 // Create Server
-Route::post('/servers', [ServerController::class, 'store'])->middleware('auth');
+Route::post('/servers', [ServerController::class, 'store'])->middleware('admin');
 
 // Show Server Edit Form
-Route::get('/servers/{id}/edit', [ServerController::class, 'edit'])->middleware('auth');
+Route::get('/servers/{id}/edit', [ServerController::class, 'edit'])->middleware('admin');
 
 // Update Server
-Route::put('/servers/{id}', [ServerController::class, 'update'])->middleware('auth');
+Route::put('/servers/{id}', [ServerController::class, 'update'])->middleware('admin');
 
 #########################################################################################################
 
 // Show Register/Create Form
-Route::get('/users/register', [UserController::class, 'create'])->middleware('guest');
+Route::get('/users/register', [UserController::class, 'create'])->middleware('guest')->name('register');
 
 // Show Login Form
-Route::get('/users/login', [UserController::class, 'login'])->middleware('guest');
+Route::get('/users/login', [UserController::class, 'login'])->middleware('guest')->name('login');
 
 //Create New User
 Route::post('/users/store', [UserController::class, 'store']);
@@ -72,7 +63,7 @@ Route::post('/users/authenticate', [UserController::class, 'authenticate']);
 Route::post('/users/logout', [UserController::class, 'logout'])->middleware('auth');
 
 // List All Users
-Route::get('/users', [UserController::class, 'index']);
+Route::get('/users', [UserController::class, 'index'])->middleware('auth');
 
 // List A User's Claimed Servers
 Route::get('/users/{id}/servers', [UserController::class, 'manage'])->middleware('auth');

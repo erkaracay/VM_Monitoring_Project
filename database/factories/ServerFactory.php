@@ -21,8 +21,7 @@ class ServerFactory extends Factory
             'ip' => $this->faker->ipv4(),
             'name' => $this->faker->name(),
             'running' => $this->faker->numberBetween(0, 1),
-            'availability' => $this->faker->randomElement(['available', 'unavailable']),
-            'available_on' => $this->faker->dateTimeBetween('today', '+1 months'),
+            'availability' => 1,
         ];
     }
 }

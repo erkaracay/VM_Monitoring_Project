@@ -35,13 +35,15 @@
                     Welcome {{ auth()->user()->name }}
                 </span>
             </li>
-            <li>
+            @if (auth()->user()->isAdmin == 1)
+                <li>
                 <a href="/servers/manage" class="font text-capitalize">
-                    <button type="button" class="p-2 hover:text-white hover:bg-gray-700 hover:rounded">
-                        <i class="fa-solid fa-gear"></i> Manage Servers
-                    </button>
-                </a>
-            </li>
+                        <button type="button" class="p-2 hover:text-white hover:bg-gray-700 hover:rounded">
+                            <i class="fa-solid fa-gear"></i> Manage Servers
+                        </button>
+                    </a>
+                </li>        
+                @endif
             <li>
                 <form action="/users/logout" method="POST" class="inline">
                     @csrf
@@ -77,9 +79,11 @@
             <li class="mx-1">
                 <a href="/users" class="bg-gray-900 hover:bg-black text-white py-2 px-5">All Users</a>
             </li>
-            <li class="mx-1">
-                <a href="/servers/manage" class="bg-gray-900 hover:bg-black text-white py-2 px-5">Manage Servers</a>
-            </li>
+                @if (auth()->user()->isAdmin == 1)
+                <li class="mx-1">
+                    <a href="/servers/manage" class="bg-gray-900 hover:bg-black text-white py-2 px-5">Manage Servers</a>
+                </li>
+                @endif
         </ul>
         @else
         <a href="/users/login" class="absolute top-2/7 right-10 bg-gray-900 hover:bg-black text-white py-2 px-5">Log In</a>

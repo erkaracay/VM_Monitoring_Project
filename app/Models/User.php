@@ -33,6 +33,14 @@ class User extends Authenticatable
         'password',
     ];
 
+    public function scopeFilter($query, array $filters) {
+        if($filters['search'] ?? false) {
+            $query->where('id', 'like', '%' . request('search') . '%')
+            ->orWhere('email', 'like', '%' . request('search') . '%')
+            ->orWhere('name', 'like', '%' . request('search') . '%');
+        }
+    }
+
     // Relationship With Server
     public function servers() {
         return $this->hasMany(Server::class, 'user_id');
