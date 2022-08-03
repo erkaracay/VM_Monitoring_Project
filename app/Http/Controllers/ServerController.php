@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Server;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -13,20 +14,32 @@ class ServerController extends Controller
         // dd(request('tag'));
         // throw new Exception('error');
 
-        // $servers = collect(Server::all())->sortByDesc('running');
-        return view('servers.index', [
-            'servers' => collect(collect(Server::latest()->filter(request(['search']))->get())->sortBy('availability'))->sortByDesc('running')->paginate(12),
-            'users' => User::all()
-        ]);
+        // $servers = collect(collect(Server::sortable()->filter(request(['search']))->get())->sortBy('availability'))->sortByDesc('running');
+        try {
+            return view('servers.index', [
+                'servers' => Server::sortable(['running' => 'desc'])->filter(request(['search']))->paginate(12),
+                'users' => User::all(),
+            ]);
+        } catch (QueryException $e) {
+            return view('servers.index', [
+                'servers' => Server::sortable(['running' => 'desc'])->filter(request(['search']))->paginate(12),
+                'users' => User::all(),
+                'error' => $e->getMessage(),
+            ]);
+        }
         
     }
 
     // Claim a server
     public function claim($id) {
         // dd(Server::find($id));
-        return view('servers.claim', [
-            'server' => Server::find($id)
-        ]);
+        try {
+            return view('servers.claim', [
+                'server' => Server::find($id)
+            ]);
+        } catch (QueryException $th) {
+            ddd($th);
+        }
     }
 
     // Unclaim a server
@@ -38,7 +51,7 @@ class ServerController extends Controller
         $server->availability = "1";
         $server->save();
 
-        return redirect('/');
+        return redirect('/')->with('message', 'Successfully unclaimed server!');
     }
 
     // Confirm claim of a server
@@ -50,17 +63,21 @@ class ServerController extends Controller
         $server->available_on = $request->date;
         $server->save();
 
-        return redirect('/');
+        return redirect('/')->with('message', 'Successfully claimed server!');
     }
 
     // List servers to manage
     public function manage() {
         $servers = collect(Server::all())->sortByDesc('running');
 
-        return view('servers.manage', [
-            'servers' => $servers->paginate(8),
-            'users' => User::all()
-        ]);
+        try {
+            return view('servers.manage', [
+                'servers' => $servers->paginate(8),
+                'users' => User::all()
+            ]);
+        } catch (QueryException $th) {
+            ddd($th);
+        }
     }
 
     // Delete server
@@ -86,7 +103,6 @@ class ServerController extends Controller
         $formFields = $request->validate([
             'name' => 'required',
             'ip' => ['required', Rule::unique('servers', 'ip')], // Check if IP is unique
-            'running' => 'required'
         ]);
 
         $formFields['user_id'] = null; // Set user_id to null initially
@@ -96,7 +112,7 @@ class ServerController extends Controller
 
         Server::create($formFields);
 
-        return redirect('/');
+        return redirect('/')->with('message', 'Successfully created server!');
     }
 
     // Show server edit form
@@ -113,8 +129,7 @@ class ServerController extends Controller
         $formFields = $request->validate([
             'name' => 'required',
             'user_id' => 'required',
-            'ip' => ['required', Rule::unique('servers', 'ip')->ignore($id)],
-            'running' => 'required',
+            'ip' => ['required'],
             'date' => 'required'
         ]);
         
@@ -129,6 +144,6 @@ class ServerController extends Controller
         $server = Server::find($id);
         $server->update($formFields);
 
-        return redirect('/servers/manage');
+        return redirect('/servers/manage')->with('message', 'Successfully updated server!');
     }
 }

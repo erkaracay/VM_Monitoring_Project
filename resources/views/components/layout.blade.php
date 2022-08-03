@@ -9,6 +9,7 @@
         integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
         crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="//unpkg.com/alpinejs" defer></script>
     <title>Server Monitoring System</title>
     <script>
         tailwind.config = {
@@ -89,5 +90,7 @@
         <a href="/users/login" class="absolute top-2/7 right-10 bg-gray-900 hover:bg-black text-white py-2 px-5">Log In</a>
         @endauth
     </footer>
+
+    <x-flash-message />
 </body>
 </html>

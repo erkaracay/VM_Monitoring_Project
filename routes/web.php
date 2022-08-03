@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MailController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ServerController;
 use App\Http\Controllers\UserController;
@@ -70,3 +71,30 @@ Route::get('/users/{id}/servers', [UserController::class, 'manage'])->middleware
 
 // List Logged In User's Servers
 Route::get('/users/owned', [UserController::class, 'getServers'])->middleware('auth');
+
+// Show Admin Actions 
+Route::get('/users/{id}/admin', [UserController::class, 'admin'])->middleware('admin');
+
+// Show User Create Form for Admins
+Route::get('/users/create', [UserController::class, 'adminCreate'])->middleware('admin');
+
+// Create User as Admin
+Route::post('/users/adminStore', [UserController::class, 'adminStore'])->middleware('admin');
+
+// Delete User
+Route::get('/users/{id}/delete', [UserController::class, 'destroy'])->middleware('admin');
+
+// Update User as Admin
+Route::put('/users/{id}/update', [UserController::class, 'update'])->middleware('admin');
+
+Route::get('/users/{id}/newPassword', [UserController::class, 'assignPassword'])->middleware('admin');
+
+#########################################################################################################
+
+// Show Test Page
+Route::get('/test', function() {
+    return view('test');
+});
+
+// Send Test Mail
+Route::get('/test/mail', [MailController::class, 'sendSignUp']);

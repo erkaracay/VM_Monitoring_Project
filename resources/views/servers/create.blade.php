@@ -25,14 +25,6 @@
             </div>
 
             <div class="mb-6">
-                <p class="text-lg mb-2" >Server Status</p>
-                <label for="up" class="inline-block text-green-500 text-m">Up</label>
-                <input type="radio" name="running" id="up" value="1" checked>
-                <label for="down" class="inline-block text-red-500 text-m ml-2">Down</label>
-                <input type="radio" name="running" id="down" value="0">
-            </div>
-
-            <div class="mb-6">
                 <button type="submit" class="bg-gray-700 text-white rounded py-2 px-4 hover:bg-black">
                     Create Server
                 </button>

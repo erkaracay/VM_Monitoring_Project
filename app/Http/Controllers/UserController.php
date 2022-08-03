@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use App\Http\Controllers\MailController;
 
 class UserController extends Controller
 {
@@ -12,7 +14,7 @@ class UserController extends Controller
     public function index() {
         // dd(request('tag'));
         return view('users.index', [
-            'users' => User::latest()->filter(request(['search']))->get()->paginate(10)
+            'users' => User::sortable(['created_at' => 'desc'])->filter(request(['search']))->paginate(10)
         ]);
     }
 
@@ -37,10 +39,13 @@ class UserController extends Controller
         // Create User
         $user = User::create($formFields);
 
+        // Send Email
+        MailController::sendSignUp($user);
+
         // Login
         auth()->login($user);
 
-        return redirect('/');
+        return redirect('/')->with('message', 'Successfully registered and logged in!');
     }
 
     // Show Login Form
@@ -55,7 +60,7 @@ class UserController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect('/')->with('message', 'Successfully logged out!');
     }
 
     // Authenticate User
@@ -68,7 +73,7 @@ class UserController extends Controller
         if(auth()->attempt($formFields)) {
             $request->session()->regenerate();
 
-            return redirect('/');
+            return redirect('/')->with('message', 'Successfully logged in!');
         }
 
         return back()->withErrors(['email' => 'Invalid Credentials'])->onlyInput('email');
@@ -76,15 +81,114 @@ class UserController extends Controller
 
     // List User's Claimed Servers
     public function manage($id) {
-        return view('users.manage', [
-            'servers' => User::find($id)->servers()->get()
-        ]);
+        try {
+            return view('users.manage', [
+                'servers' => User::find($id)->servers()->get()
+            ]);
+        } catch (Exception $th) {
+            dd($th);
+        }
     }
 
     // List Logged In User's Servers
     public function getServers() {
-        return view('users.manage', [
-            'servers' => auth()->user()->servers()->get()
-        ]);
+        try {
+            return view('users.manage', [
+                'servers' => auth()->user()->servers()->get()
+            ]);
+        } catch (Exception $th) {
+            ddd($th);
+        }
     }
+
+    // Show User Create Form for Admin
+    public function adminCreate() {
+        return view('users.create');
+    }
+
+    // Create New User as Admin
+    public function adminStore(Request $request) {
+        // dd($request);
+        $formFields = $request->validate([
+            'name' => ['required', 'min:3'],
+            'email' => ['required', 'email'],
+            'password' => ['required', 'min:6'],
+            'isAdmin' => ['required']
+        ]);
+
+        // Hash Password & ID
+        $formFields['password'] = bcrypt($formFields['password']);
+        $formFields['id'] = fake()->unique()->numerify('######');
+
+        // Create User
+        User::create($formFields);
+
+        return redirect('/')->with('message', 'Successfully created user!');
+    }    
+
+    // Show Admin Actions
+    public function admin($id) {
+        // dd(User::find($id))
+        try {
+            return view('users.admin', [
+                'user' => User::find($id)
+            ]);
+        } catch (Exception $th) {
+            return redirect('/')->with('message', 'User not found!');
+        }
+    }
+
+    // Delete User as Admin
+    public function destroy($id) {
+        // dd($id);
+        try {
+            User::find($id)->delete();
+        } catch (Exception $th) {
+            return redirect('/')->with('message', 'Error deleting user!');
+        }
+
+        return redirect('/')->with('message', 'Successfully deleted user!');
+    }
+
+    // Update User as Admin
+    public function update(Request $request, $id) {
+        // dd($request);
+        $formFields = $request->validate([
+            'name' => ['required', 'min:3'],
+            'email' => ['required', 'email'],
+            'isAdmin' => ['required']
+        ]);
+
+        // Update User
+        try {
+            User::find($id)->update($formFields);
+        } catch (Exception $th) {
+            return redirect('/')->with('message', 'Error updating user!');
+        }
+
+        return redirect('/users')->with('message', 'Successfully updated user!');
+    }
+
+    // Assign a random password to a user as Admin
+    public function assignPassword($id) {
+        // dd($id);
+        try {
+            $user = User::find($id);
+            $password = fake()->password;
+            MailController::sendNewPassword($user, $password);
+            $password = bcrypt($password);
+            throw new Exception("Error Processing Request", 1);
+            
+            $user->update(['password' => $password]);
+            $user->save();
+        } catch (Exception $th) {
+            // dd($th->getMessage());
+            return redirect('/')->with('message', 'Error assigning password!' . $th->getMessage());
+        }
+
+        
+
+        return redirect('/users')->with('message', 'Successfully assigned password!');
+    }
+
 }

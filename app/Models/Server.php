@@ -4,9 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Kyslik\ColumnSortable\Sortable;
 
 class Server extends Model {
-    use HasFactory;
+    use HasFactory, Sortable;
 
     protected $fillable = [
         'name',
@@ -16,6 +17,8 @@ class Server extends Model {
         'user_id',
         'available_on'
     ];
+
+    public $sortable = ['id', 'user_id', 'running', 'ip', 'name', 'availability', 'available_on'];
 
     // Relationship To User
     public function user() {

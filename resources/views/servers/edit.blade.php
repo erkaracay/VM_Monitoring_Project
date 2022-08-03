@@ -48,14 +48,6 @@
             </div>
 
             <div class="mb-6">
-                <p class="text-lg mb-2">Server Status</p>
-                <label for="up" class="inline-block text-green-500 text-m">Up</label>
-                <input type="radio" name="running" id="up" value="1" @if ($server->running) checked @endif>
-                <label for="down" class="inline-block text-red-500 text-m ml-2">Down</label>
-                <input type="radio" name="running" id="down" value="0" @if (!$server->running) checked @endif>
-            </div>
-
-            <div class="mb-6">
                 <input type="date" id="datefield" class="border border-gray-200 rounded p-2 w-full" name="date" value="{{$server->available_on}}"/>
                 @error("date")
                     <p class="text-red-500 text-xs mt-1">{{$message}}</p>
