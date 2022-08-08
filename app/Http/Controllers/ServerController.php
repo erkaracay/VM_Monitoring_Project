@@ -7,6 +7,7 @@ use App\Models\Server;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use PhpParser\Node\Stmt\Foreach_;
 
 class ServerController extends Controller
 {
@@ -43,13 +44,19 @@ class ServerController extends Controller
     }
 
     // Unclaim a server
-    public function unclaim($id) {
+    public static function unclaim($id) {
         // dd(Server::find($id));
         $server = Server::find($id);
         $server->user_id = null;
         $server->available_on = null;
         $server->availability = "1";
         $server->save();
+
+        foreach (User::all() as $user) {
+            if ($user->isAdmin) {
+                MailController::sendServerUnclaimed(auth()->user(), $server);
+            }
+        }
 
         return redirect('/')->with('message', 'Successfully unclaimed server!');
     }
@@ -62,6 +69,12 @@ class ServerController extends Controller
         $server->availability = "0";
         $server->available_on = $request->date;
         $server->save();
+
+        foreach (User::all() as $user) {
+            if ($user->isAdmin) {
+                MailController::sendServerClaimed(auth()->user(), $server);
+            }
+        }
 
         return redirect('/')->with('message', 'Successfully claimed server!');
     }

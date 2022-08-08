@@ -31,6 +31,6 @@ class SignUp extends Mailable
      */
     public function build()
     {
-        return $this->from('test@test.com')->subject('Welcome to the system!')->markdown("emails.signUp");
+        return $this->from('test@mail.com')->subject('Welcome to the system!')->markdown("emails.signUp");
     }
 }

@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use Exception;
+use App\Models\User;
+use App\Models\Server;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\MailController;
@@ -142,12 +143,20 @@ class UserController extends Controller
     public function destroy($id) {
         // dd($id);
         try {
+            $user = User::find($id);
+
+            foreach ($user->servers as $server) {
+                // dd($server);
+                ServerController::unclaim($server->id);
+            }
+
             User::find($id)->delete();
         } catch (Exception $th) {
+            dd($th);
             return redirect('/')->with('message', 'Error deleting user!');
         }
 
-        return redirect('/')->with('message', 'Successfully deleted user!');
+        return redirect('/')->with('message', 'Successfully deleted user and unclaimed servers!');
     }
 
     // Update User as Admin

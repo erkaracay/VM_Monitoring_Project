@@ -3,27 +3,28 @@
 namespace App\Mail;
 
 use App\Models\User;
+use App\Models\Server;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
-class NewPassword extends Mailable
+class ServerUnclaimed extends Mailable
 {
     use Queueable, SerializesModels;
 
     public User $user;
-    public $password;
+    public Server $server;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($user, $password)
+    public function __construct($user, $server)
     {
         $this->user = $user;
-        $this->password = $password;
+        $this->server = $server;
     }
 
     /**
@@ -33,6 +34,6 @@ class NewPassword extends Mailable
      */
     public function build()
     {
-        return $this->from('test@mail.com')->subject('Password Changed By Admin')->markdown("emails.NewPassword");
+        return $this->from('test@mail.com')->subject('Server Claimed!')->markdown("emails.serverUnClaimed");
     }
 }

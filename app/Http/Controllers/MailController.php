@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Mail\SignUp;
 use App\Models\User;
+use App\Models\Server;
 use App\Mail\NewPassword;
-use Illuminate\Http\Request;
 
+use App\Mail\ServerClaimed;
+use Illuminate\Http\Request;
+use App\Mail\ServerUnclaimed;
 use Illuminate\Support\Facades\Mail;
-use function PHPUnit\Framework\returnSelf;
 
 class MailController extends Controller
 {
@@ -21,8 +23,16 @@ class MailController extends Controller
 
     // Send Password Reset Email
     public static function sendNewPassword(User $user, $password) {
-        // $user = User::find(788659);
-        // dd($user);
         Mail::to($user->email)->send(new NewPassword($user, $password));
+    }
+
+    // Send Server Claimed Email
+    public static function sendServerClaimed(User $user, Server $server) {
+       Mail::to($user->email)->send(new ServerClaimed($user, $server));
+    }
+
+    // Send Server Unclaimed Email
+    public static function sendServerUnclaimed(User $user, Server $server) {
+        Mail::to($user->email)->send(new ServerUnclaimed($user, $server));
     }
 }

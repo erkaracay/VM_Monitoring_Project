@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('servers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->nullable()->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('user_id')->nullable()->references('id')->on('users')->onDelete('set null');
             $table->ipAddress('ip');
             $table->string('name', 35);
             $table->boolean('running')->default(true);
