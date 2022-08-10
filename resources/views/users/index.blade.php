@@ -15,7 +15,7 @@
             <tbody>
                 @unless($users->isEmpty())
                     @foreach($users as $user)
-                    <tr class="border-gray-300">
+                    <tr class="border-gray-300 hover:bg-gray-300">
                         <td class="px-4 py-2 border-t border-b border-gray-300 text-center text-lg">{{$user->id}}</td>
                         <td class="px-4 py-2 border-t border-b border-gray-300 text-center text-lg">{{$user->name}}</td>
                         <td class="px-4 py-2 border-t border-b border-gray-300 text-center text-lg">{{$user->email}}</td>
